@@ -1,6 +1,3 @@
-# PASTE THE ENTIRE Python script (app_searxng_discover.py) HERE
-# From the previous message. Ensure it's complete.
-
 #-------------------------------------------------------------------------------------------------#
 #-- Standard Library Imports --#
 #-------------------------------------------------------------------------------------------------#
