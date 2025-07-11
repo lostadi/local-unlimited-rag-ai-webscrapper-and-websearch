@@ -26,20 +26,34 @@ from langchain_core.documents import Document
 #-------------------------------------------------------------------------------------------------#
 os.environ["GRADIO_ANALYTICS_ENABLED"] = "False"
 
-SEARXNG_URL = "http://localhost:8080"  # Default SearXNG address - CHANGE IF YOURS IS DIFFERENT
-SEARXNG_MAX_RESULTS = 150              # How many results to request from SearXNG
-                                       # SearXNG itself will get more from backends and rank them
+SEARXNG_URL = "http://localhost:8080"  # Default SearXNG address, If you ran the setup shell script then your SEARXNG is on port 8080 
 
-MAX_CONTENT_PER_PAGE = 250000
-MIN_DELAY_PER_REQUEST_SCRAPE = 0.5 # For scraping individual pages
-MAX_DELAY_PER_REQUEST_SCRAPE = 1.0 # For scraping individual pages
-REQUEST_TIMEOUT = 100000
+SEARXNG_MAX_RESULTS = 150              # Maximum number of search results and thus webpages that will be fetched and scraped 
+                                       # SearXNG itself will still get more from backends and rank them if SEARXNG_MAX_RESULTS <  number of results found for search 
+
+
+MAX_CONTENT_PER_PAGE = 250000 # <-- the maximum number of tokens the scraper will scrape from each page 
+
+
+# --- Webscrapper will find amount of time to wait before sending scrap request to each webpage by choosing to wait the amount of seconds that is randomly and uniformly sampled from the range: [ MIN_DELAY_PER_REQUEST_SCRAPE , MAX_DELAY_PER_REQUEST_SCRAPE ]; 
+
+MIN_DELAY_PER_REQUEST_SCRAPE = 0.5 # <-- Minimum amount of time webscrapper will wait before webscraping each page in seconds (can set to 0 with no problem from the search engine but can cause alot of websites to deny request if too low due to basic anti-scraper measures) 
+
+MAX_DELAY_PER_REQUEST_SCRAPE = 1.0 # <-- Maximum amount of time webscrapper will wait before webscraping each page in seconds (can set to 0 with no problem from the search engine but can cause alot of websites to deny request if too low due to basic anti-scraper measures) 
+
+# --- /
+
+
+REQUEST_TIMEOUT = 100000 # <-- Amount of time (in seconds) this script will wait for a response from webpage's server before getting angry and giving up 
 
 OLLAMA_MODEL_PY = "huihui_ai/qwen3-abliterated:0.6b"
+
 OLLAMA_EMBEDDING_MODEL_PY = "nomic-embed-text"
+
 GRADIO_PORT_PY = 12123 # New port
 
 K_RETRIEVER = 200
+
 K_CONTEXT_FOR_LLM = 50
 
 USER_AGENTS = [ # For scraping the actual content pages
@@ -86,9 +100,9 @@ def discover_urls_via_searxng(query):
         'q': query,
         'format': 'json',
         'pageno': 1, # Request first page of results from SearXNG
-        # 'language': 'en', # Optional: specify language
-        # 'time_range': 'day', # Optional: 'day', 'week', 'month', 'year'
-        # 'safesearch': 1, # 0 (None), 1 (Moderate), 2 (Strict)
+         'language': 'en', # Optional: specify language
+         'time_range': 'year', # Optional: 'day', 'week', 'month', 'year'
+         'safesearch': 0, # 0 (None), 1 (Moderate), 2 (Strict)
     }
     
     discovered_urls_info = []
