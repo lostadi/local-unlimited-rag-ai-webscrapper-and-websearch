@@ -7,7 +7,7 @@ set -euo pipefail
 # --- User-configurable Parameters ---
 APP_DIR="$HOME/ai_rag_apps" # Consolidated app directory
 GRADIO_PORT=12123
-OLLAMA_MODEL="huihui_ai/qwen3-abliterated:4b"
+OLLAMA_MODEL="huihui_ai/jan-nano-abliterated:latest"
 OLLAMA_EMBEDDING_MODEL="nomic-embed-text"
 
 # --- Source File Definitions ---
