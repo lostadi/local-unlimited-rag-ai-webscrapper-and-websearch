@@ -122,12 +122,6 @@ ai_rag_apps/
 └── ...
 ```
 
-## Roadmap
-
-* Plug‑in authentication for private search hosts
-* Async scraping for speed
-* UI theming and citations preview
-
 ## License
 
 My Driver's License 
